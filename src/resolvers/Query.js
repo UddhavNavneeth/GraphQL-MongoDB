@@ -1,5 +1,6 @@
 // import getUserId from '../utils/getUserId'
 const { User } = require('./../../models/user')
+const getUserId = require('./../utils/getUserId')
 
 const Query = {
     users(parent, args, {  }, info) {
@@ -19,15 +20,11 @@ const Query = {
         // return prisma.query.users(opArgs, info)
         return User.find()
     },
-    // me(parent, args, { prisma, request }, info) {
-    //     const userId = getUserId(request)
+    me(parent, args, { request }, info) {
+        const userId = getUserId(request)
 
-    //     return prisma.query.user({
-    //         where: {
-    //             id: userId
-    //         }
-    //     }, info)
-    // }
+        return User.findById(userId)
+    }
 }
 
 // export { Query as default }

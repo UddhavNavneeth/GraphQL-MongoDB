@@ -6,6 +6,7 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const { User } = require('./../../models/user')
+const getUserId = require('./../utils/getUserId')
 
 const Mutation = {
     async createUser(parent, args, { prisma }, info) {
@@ -40,23 +41,17 @@ const Mutation = {
             token: jwt.sign({ userId: user.id }, 'secret', { expiresIn: '7 days'})
         }
     },
-    async deleteUser(parent, args, { prisma, request }, info) {
-        // const userId = getUserId(request)
+    async deleteUser(parent, args, { request }, info) {
+        const userId = getUserId(request)
 
-        // return prisma.mutation.deleteUser({ 
-        //     where: { 
-        //         id: userId 
-        //     } 
-        // }, info)
-
-        const deleteWait = await User.findByIdAndRemove(args.id)
+        const deleteWait = await User.findByIdAndRemove(userId)
 
         return 200
     },
     async updateUser(parent, args, { prisma, request }, info) {
-        // const userId = getUserId(request)
+        const userId = getUserId(request)
 
-        const user = await User.findById(args.data.id)
+        const user = await User.findById(userId)
 
         if (typeof args.data.password === 'string') {
             user.password = args.data.password

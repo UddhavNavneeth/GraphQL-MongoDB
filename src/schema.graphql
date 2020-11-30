@@ -7,7 +7,7 @@ type Query {
 type Mutation {
     createUser(data: CreateUserInput!): AuthPayLoad!
     login(data: LoginUserInput): AuthPayLoad!
-    deleteUser(id: ID!): Int!
+    deleteUser: Int!
     updateUser(data: UpdateUserInput!): User!
 }
 
@@ -32,7 +32,6 @@ input LoginUserInput {
 }
 
 input UpdateUserInput {
-    id: ID!
     name: String
     password: String
 }

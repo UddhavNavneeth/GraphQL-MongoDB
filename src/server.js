@@ -38,7 +38,12 @@ const pubsub = new PubSub();
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
     // typeDefs,
-    resolvers
+    resolvers,
+    context(request) {
+        return {
+            request
+        }
+    },
 })
 
 // export { server as default }
